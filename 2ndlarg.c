@@ -4,23 +4,44 @@ Function prototype
 Int find2ndMax(int numbers[],int size);*/
 
 #include <stdio.h>
+#include <limits.h>
+
 int find2ndMax(int numbers[], int size) {
-  int max = numbers[0];
-  int secondMax = numbers[0];
-  for (int i = 1; i < size; i++) {
-    if (numbers[i] > max) {
-      secondMax = max;
-      max = numbers[i];
-    } else if (numbers[i] > secondMax && numbers[i] != max) {
-      secondMax = numbers[i];
+  if (size < 2) {
+    // Not enough elements to have a second largest
+    return INT_MIN;  // Return the smallest possible integer
+  }
+  // Initialize largest and second largest
+  int largest = INT_MIN; 
+  int secondLargest = INT_MIN;
+  // Find the largest and second largest
+  for (int i = 0; i < size; i++) {
+    if (numbers[i] > largest) {
+      secondLargest = largest;
+      largest = numbers[i];
+    } else if (numbers[i] > secondLargest && numbers[i] != largest) {
+      secondLargest = numbers[i];
     }
   }
-  return secondMax;
-}
 
+  return secondLargest;
+}
+// Main function
 int main() {
-  int numbers[] = {1, 2, 3, 4, 5};
-  int size = sizeof(numbers) / sizeof(numbers[0]);
-  printf("The second largest number is %d\n", find2ndMax(numbers, size));
+  // Test array
+  int arr[] = {10, 5, 25, 15, 20};
+  // Calculate the size of the array
+  int size = sizeof(arr) / sizeof(arr[0]);
+  // Find the second largest element
+  int secondMax = find2ndMax(arr, size);
+
+  // Print the result
+
+  if (secondMax == INT_MIN) {
+    printf("There is no second largest element\n");
+  } else {
+    printf("The second largest element is: %d\n", secondMax);
+  }
+
   return 0;
 }
